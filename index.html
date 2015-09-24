@@ -1,0 +1,59 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Swag URL Shortener</title>
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+
+<body>
+  <div id="generator-inputs">
+    <input type="text" id="url"><button onclick="generateUrl()">Generate</button>
+  </div>
+  <div style="display:none" id="generator-success">
+    <span>URL: </span><span id="generated-url"></span>
+  </div>
+<script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+<script type="text/javascript">
+function generateUrl() {
+  url = $("#url").val();
+  if (url !== "") {
+    var id = Math.random().toString(36).substr(2, 6).toUpperCase();
+    var obj = {};
+    obj[id] = url;
+
+    var urlsRef = new Firebase("https://dazzling-torch-6955.firebaseio.com/urls");
+    urlsRef.once("value", function(snapshot) {
+      urls = snapshot.val();
+
+      if (urls[id] === undefined) {
+        urlsRef.update(obj);
+
+        $("#generated-url").text("imrlyclever.com/" + id);
+        $("#generator-inputs").hide();
+        $("#generator-success").show();
+      } else {
+        console.log('hi');
+      }
+    });
+  }
+}
+
+var parts = window.location.href.split("/");
+var id = parts[parts.length - 1];
+if (id !== '') {
+  var urlsRef = new Firebase("https://dazzling-torch-6955.firebaseio.com/urls");
+
+  urlsRef.once("value", function(snapshot) {
+    urls = snapshot.val();
+
+    if (urls[id] !== undefined) {
+      window.location.href = urls[id];
+    }
+  });
+}
+</script>
+</body>
+</html>
