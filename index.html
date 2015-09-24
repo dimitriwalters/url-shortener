@@ -9,12 +9,13 @@
   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 </head>
 
-<body>
+<body style="text-align:center">
+  <h1>URL Shortener</h1>
   <div id="generator-inputs">
-    <input type="text" id="url"><button onclick="generateUrl()">Generate</button>
+    <input type="text" id="url"><button style="margin-left:5px" onclick="generateUrl()">Generate</button>
   </div>
   <div style="display:none" id="generator-success">
-    <span>URL: </span><span id="generated-url"></span>
+    <span>Here you go, enjoy: </span><span id="generated-url"></span>
   </div>
 <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
@@ -33,7 +34,7 @@ function generateUrl() {
       if (urls[id] === undefined) {
         urlsRef.update(obj);
 
-        $("#generated-url").text("imrlyclever.com/" + id);
+        $("#generated-url").html("<a href='http://imrlyclever.com/" + id + "'>imrlyclever.com/" + id + "</a>");
         $("#generator-inputs").hide();
         $("#generator-success").show();
       } else {
