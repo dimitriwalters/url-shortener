@@ -1,3 +1,3 @@
 # shortener
 
-A url shortener, with more swag. Create a url easily with no hassle, built using Firebase and Javascript.
+A url shortener built with just JavaScript and Firebase.
